@@ -1,0 +1,80 @@
+<?php
+	include 'connection.php';
+	$fname = ""; $lname=""; $email=""; $password=""; $result="";
+	if(isset($_POST['submit'])){
+		$fname=$_POST['fname'];
+		$lname=$_POST['lname'];
+		$email=$_POST['email'];
+		$password=$_POST['password'];
+	}
+
+	if($con->connect_error)
+    {
+		echo "inside 1st if";
+        //die("Connection Failed" . $con->connect_error);
+    }
+
+    $sql = "INSERT INTO form (fname, lname, email, password) VALUES ('$fname' , '$lname' , '$email' , '$password')";
+	if($result)
+	{
+		header('location:display.php');
+	}
+	else{
+		//die(mysqli_error($con));
+	}
+    if($con->query($sql) === TRUE)
+    {
+        echo "Registered";
+    }
+    else
+    {
+        echo "ERROR".$sql."<br>".$con->error;
+    }
+
+	$con->close();
+
+?>
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>CRUD operation</title>
+  </head>
+  <body>
+		<div class="container my-5">
+		<form method="post">
+			<div class="form-group">
+			<label>First Name</label>
+			<input type="text" class="form-control"  placeholder="Enter First Name" name="fname" autocomplete="off" required>
+			</div>
+		  <div class="form-group">
+			<label>Last name</label>
+			<input type="text" class="form-control"  placeholder="Enter Last Name" name="lname" required> 
+			</div>
+		  <div class="form-group">
+			<label for="exampleInputEmail1">Email address</label>
+			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
+			</div>
+		  <div class="form-group">
+			<label for="exampleInputPassword1">Password</label>
+			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" required>
+		  </div>
+		  <div class="form-check">
+			<input type="checkbox" class="form-check-input" id="exampleCheck1">
+			<label class="form-check-label" for="exampleCheck1">Check me out</label>
+		  </div>
+		  <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+		  <button type="submit" class="btn btn-primary" name="submit"><a href="display.php" class="text-light">VIEW TABLE</a></button>
+		</form>
+		
+		</div>
+   </body>
+</html>
